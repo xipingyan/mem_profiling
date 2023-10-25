@@ -26,8 +26,8 @@ def main():
     RUN_OV=1
     if RUN_OV:
         model_name = "chgk13/decicoder-1b-openvino-int8"
-        model_name="../llm_internal_test/models/decicoder-1b-openvino-int8/pytorch/dldt/FP32/"
-        model_name="../llm_internal_test/models/llama-2-7b-chat/INT8_compressed_weights/"
+        model_name="../../llm_internal_test/models/decicoder-1b-openvino-int8/pytorch/dldt/FP32/"
+        model_name="../../llm_internal_test/models/llama-2-7b-chat/INT8_compressed_weights/"
         print(f"model_name={model_name}")
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = OVModelForCausalLM.from_pretrained(model_name, cache_dir="./tmp")
@@ -167,7 +167,7 @@ class XSoftmax(torch.autograd.Function):
 
         text=text_old
         token_ids = tokenizer(text, return_tensors="pt").input_ids
-        for _ in tqdm(range(20)):
+        for _ in tqdm(range(2)):
             input_tokens = token_ids.shape[-1]
             if RUN_OV:
                 model.compile()
@@ -177,7 +177,7 @@ class XSoftmax(torch.autograd.Function):
 
         text = "def fibonacci(n):"
         token_ids = tokenizer(text, return_tensors="pt").input_ids
-        for _ in tqdm(range(10)):
+        for _ in tqdm(range(2)):
             input_tokens = token_ids.shape[-1]
             token_ids = model.generate(token_ids, **(GenerationParameters(top_p=1).__dict__))
             output_tokens = token_ids.shape[-1]
@@ -185,7 +185,7 @@ class XSoftmax(torch.autograd.Function):
 
         text = "def fibonacci(n):"
         token_ids = tokenizer(text, return_tensors="pt").input_ids
-        for _ in tqdm(range(10)):
+        for _ in tqdm(range(2)):
             input_tokens = token_ids.shape[-1]
             token_ids = model.generate(token_ids, **(GenerationParameters(top_p=1).__dict__))
             output_tokens = token_ids.shape[-1]
@@ -193,7 +193,7 @@ class XSoftmax(torch.autograd.Function):
 
         text = "def fibonacci(n):"
         token_ids = tokenizer(text, return_tensors="pt").input_ids
-        for _ in tqdm(range(10)):
+        for _ in tqdm(range(2)):
             input_tokens = token_ids.shape[-1]
             token_ids = model.generate(token_ids, **(GenerationParameters(top_p=1).__dict__))
             output_tokens = token_ids.shape[-1]
@@ -201,7 +201,7 @@ class XSoftmax(torch.autograd.Function):
         
         text=text_old
         token_ids = tokenizer(text, return_tensors="pt").input_ids
-        for _ in tqdm(range(10)):
+        for _ in tqdm(range(2)):
             input_tokens = token_ids.shape[-1]
             if RUN_OV:
                 model.compile()

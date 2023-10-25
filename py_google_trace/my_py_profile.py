@@ -38,6 +38,12 @@ class ManageProfile:
         self._itms_tracing.append(itm)
     def add_mem(self, itm):
         self._itms_mems.append(itm)
+        # a=self._itms_mems[len(self._itms_mems)-1]._kwargs["mem_size"]
+        # print(f"add itm size1: {a}")
+        # self._itms_mems[len(self._itms_mems)-1]._kwargs["mem_size"] = self._itms_mems[len(self._itms_mems)-1]._kwargs["mem_size"] - sys.getsizeof(self._itms_mems)
+        # a=self._itms_mems[len(self._itms_mems)-1]._kwargs["mem_size"]
+        # print(f"add itm size2: {a}")
+
     def __del__(self):
         # Save tracing log to json
         dict_itms=[]
@@ -133,6 +139,7 @@ class MyProfile:
             itm_mem1._ts1=self._ts1
             itm_mem1._kwargs=dict(mem_size=self._mem_info.uss)
             g_manage_profile.add_mem(itm_mem1)
+            del itm_mem1
 
             itm_mem2=ITMS()
             itm_mem2._ts1=ts2
